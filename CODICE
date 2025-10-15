@@ -1,0 +1,367 @@
+import React, { useState } from 'react';
+import { Search, TrendingUp, Target, Globe, BarChart3, Eye, Users, Link as LinkIcon, Award, Zap } from 'lucide-react';
+
+export default function SitoSEO() {
+  const [url, setUrl] = useState('');
+  const [analyzing, setAnalyzing] = useState(false);
+  const [activeTab, setActiveTab] = useState('ranking');
+  const [results, setResults] = useState(null);
+
+  const handleAnalyze = async () => {
+    if (!url) return;
+    
+    setAnalyzing(true);
+    
+    // Simulazione analisi
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setResults({
+      ranking: {
+        position: Math.floor(Math.random() * 20) + 1,
+        keywords: Math.floor(Math.random() * 500) + 100,
+        visibility: Math.floor(Math.random() * 40) + 60,
+        searchEngines: ['Google', 'Bing', 'Yahoo', 'DuckDuckGo']
+      },
+      competitors: [
+        { name: 'competitor1.com', position: 5, keywords: 850, overlap: 65 },
+        { name: 'competitor2.com', position: 8, keywords: 720, overlap: 52 },
+        { name: 'competitor3.com', position: 12, keywords: 640, overlap: 48 }
+      ],
+      keywords: [
+        { term: 'web design', volume: 12000, difficulty: 65, position: 8 },
+        { term: 'seo services', volume: 8500, difficulty: 72, position: 15 },
+        { term: 'digital marketing', volume: 15000, difficulty: 80, position: 12 },
+        { term: 'online business', volume: 6700, difficulty: 58, position: 6 }
+      ],
+      traffic: {
+        organic: 4500,
+        paid: 850,
+        direct: 1200,
+        referral: 650
+      }
+    });
+    
+    setAnalyzing(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
+      {/* Header */}
+      <div className="bg-black bg-opacity-30 backdrop-blur-sm border-b border-white border-opacity-20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="bg-gradient-to-r from-cyan-400 to-blue-500 p-2 rounded-lg">
+                <TrendingUp className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-white">SITOSEO</h1>
+                <p className="text-cyan-300 text-sm">Analisi SEO Avanzata</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2 text-white">
+              <Award className="w-5 h-5 text-yellow-400" />
+              <span className="text-sm">Premium Edition</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Search Box */}
+        <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white border-opacity-20 mb-8">
+          <h2 className="text-2xl font-bold text-white mb-4 flex items-center">
+            <Globe className="w-6 h-6 mr-2 text-cyan-400" />
+            Inserisci URL da Analizzare
+          </h2>
+          <div className="flex gap-4">
+            <input
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://esempio.com"
+              className="flex-1 px-6 py-4 rounded-xl bg-white bg-opacity-20 border-2 border-white border-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:border-cyan-400 focus:bg-opacity-30 transition-all text-lg"
+            />
+            <button
+              onClick={handleAnalyze}
+              disabled={analyzing || !url}
+              className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold text-lg hover:from-cyan-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-cyan-500/50 flex items-center space-x-2"
+            >
+              {analyzing ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  <span>Analisi...</span>
+                </>
+              ) : (
+                <>
+                  <Search className="w-5 h-5" />
+                  <span>Analizza</span>
+                </>
+              )}
+            </button>
+          </div>
+          
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+              <Globe className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
+              <div className="text-white font-bold">370+</div>
+              <div className="text-gray-300 text-sm">Motori di Ricerca</div>
+            </div>
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+              <Target className="w-6 h-6 text-green-400 mx-auto mb-2" />
+              <div className="text-white font-bold">Geo-Target</div>
+              <div className="text-gray-300 text-sm">Precisione Locale</div>
+            </div>
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+              <Eye className="w-6 h-6 text-purple-400 mx-auto mb-2" />
+              <div className="text-white font-bold">Real-Time</div>
+              <div className="text-gray-300 text-sm">Dati Aggiornati</div>
+            </div>
+            <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+              <Zap className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
+              <div className="text-white font-bold">AI-Powered</div>
+              <div className="text-gray-300 text-sm">Analisi Intelligente</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Results */}
+        {results && (
+          <div className="space-y-6">
+            {/* Tabs */}
+            <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-2 flex gap-2 border border-white border-opacity-20">
+              <button
+                onClick={() => setActiveTab('ranking')}
+                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center space-x-2 ${
+                  activeTab === 'ranking'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                <BarChart3 className="w-5 h-5" />
+                <span>Posizionamento</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('competitors')}
+                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center space-x-2 ${
+                  activeTab === 'competitors'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                <Users className="w-5 h-5" />
+                <span>Competitor</span>
+              </button>
+              <button
+                onClick={() => setActiveTab('keywords')}
+                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center space-x-2 ${
+                  activeTab === 'keywords'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg'
+                    : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                <Target className="w-5 h-5" />
+                <span>Parole Chiave</span>
+              </button>
+            </div>
+
+            {/* Ranking Tab */}
+            {activeTab === 'ranking' && (
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                    <TrendingUp className="w-5 h-5 mr-2 text-green-400" />
+                    Performance Generale
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="bg-white bg-opacity-10 rounded-lg p-4">
+                      <div className="text-gray-300 text-sm mb-1">Posizione Media</div>
+                      <div className="text-4xl font-bold text-cyan-400">#{results.ranking.position}</div>
+                    </div>
+                    <div className="bg-white bg-opacity-10 rounded-lg p-4">
+                      <div className="text-gray-300 text-sm mb-1">Parole Chiave Monitorate</div>
+                      <div className="text-3xl font-bold text-white">{results.ranking.keywords}</div>
+                    </div>
+                    <div className="bg-white bg-opacity-10 rounded-lg p-4">
+                      <div className="text-gray-300 text-sm mb-1">Visibilità SEO</div>
+                      <div className="flex items-center">
+                        <div className="flex-1 bg-white bg-opacity-20 rounded-full h-3 mr-3">
+                          <div
+                            className="bg-gradient-to-r from-green-400 to-cyan-500 h-3 rounded-full"
+                            style={{ width: `${results.ranking.visibility}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-xl font-bold text-white">{results.ranking.visibility}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                  <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+                    <Globe className="w-5 h-5 mr-2 text-blue-400" />
+                    Motori di Ricerca
+                  </h3>
+                  <div className="space-y-3">
+                    {results.ranking.searchEngines.map((engine, idx) => (
+                      <div key={idx} className="bg-white bg-opacity-10 rounded-lg p-4 flex items-center justify-between">
+                        <span className="text-white font-semibold">{engine}</span>
+                        <span className="bg-green-500 bg-opacity-20 text-green-400 px-3 py-1 rounded-full text-sm font-bold">
+                          Monitorato
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-6 bg-gradient-to-r from-purple-500 to-pink-500 bg-opacity-20 rounded-lg p-4 border border-purple-400 border-opacity-30">
+                    <div className="text-white font-semibold mb-2">Traffico Totale</div>
+                    <div className="text-3xl font-bold text-white">
+                      {(results.traffic.organic + results.traffic.paid + results.traffic.direct + results.traffic.referral).toLocaleString()}
+                    </div>
+                    <div className="text-purple-300 text-sm mt-1">visite mensili</div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Competitors Tab */}
+            {activeTab === 'competitors' && (
+              <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+                  <Users className="w-5 h-5 mr-2 text-orange-400" />
+                  Analisi Competitor
+                </h3>
+                <div className="space-y-4">
+                  {results.competitors.map((comp, idx) => (
+                    <div key={idx} className="bg-white bg-opacity-10 rounded-xl p-5 hover:bg-opacity-20 transition-all">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center space-x-3">
+                          <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <div className="text-white font-semibold flex items-center">
+                              <LinkIcon className="w-4 h-4 mr-2" />
+                              {comp.name}
+                            </div>
+                            <div className="text-gray-400 text-sm">Posizione #{comp.position}</div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-white font-bold">{comp.keywords}</div>
+                          <div className="text-gray-400 text-sm">parole chiave</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <span className="text-gray-300 text-sm mr-3">Overlap Keywords:</span>
+                        <div className="flex-1 bg-white bg-opacity-20 rounded-full h-2">
+                          <div
+                            className="bg-gradient-to-r from-orange-400 to-red-500 h-2 rounded-full"
+                            style={{ width: `${comp.overlap}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-white font-bold ml-3">{comp.overlap}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Keywords Tab */}
+            {activeTab === 'keywords' && (
+              <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+                  <Target className="w-5 h-5 mr-2 text-green-400" />
+                  Ricerca Parole Chiave
+                </h3>
+                <div className="space-y-3">
+                  {results.keywords.map((kw, idx) => (
+                    <div key={idx} className="bg-white bg-opacity-10 rounded-xl p-5 hover:bg-opacity-20 transition-all">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="text-white font-semibold text-lg">{kw.term}</div>
+                        <div className="flex items-center space-x-4">
+                          <div className="text-center">
+                            <div className="text-gray-400 text-xs">Volume</div>
+                            <div className="text-white font-bold">{kw.volume.toLocaleString()}</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-gray-400 text-xs">Difficoltà</div>
+                            <div className={`font-bold ${kw.difficulty > 70 ? 'text-red-400' : kw.difficulty > 50 ? 'text-yellow-400' : 'text-green-400'}`}>
+                              {kw.difficulty}
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-gray-400 text-xs">Posizione</div>
+                            <div className="text-cyan-400 font-bold">#{kw.position}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="flex-1 bg-white bg-opacity-20 rounded-full h-2">
+                          <div
+                            className={`h-2 rounded-full ${kw.difficulty > 70 ? 'bg-gradient-to-r from-red-500 to-orange-500' : kw.difficulty > 50 ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-green-500 to-cyan-500'}`}
+                            style={{ width: `${kw.difficulty}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 grid grid-cols-4 gap-4">
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+                    <div className="text-gray-300 text-sm mb-1">Google Ads</div>
+                    <div className="text-white font-bold">1,240</div>
+                  </div>
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+                    <div className="text-gray-300 text-sm mb-1">Autocomplete</div>
+                    <div className="text-white font-bold">856</div>
+                  </div>
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+                    <div className="text-gray-300 text-sm mb-1">Related</div>
+                    <div className="text-white font-bold">623</div>
+                  </div>
+                  <div className="bg-white bg-opacity-10 rounded-lg p-4 text-center">
+                    <div className="text-gray-300 text-sm mb-1">People Ask</div>
+                    <div className="text-white font-bold">412</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Features Footer */}
+        {!results && (
+          <div className="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-8 border border-white border-opacity-20">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">Funzionalità Avanzate</h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-gradient-to-r from-cyan-500 to-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">Monitoraggio Posizioni</h4>
+                <p className="text-gray-300 text-sm">Traccia il posizionamento su 370+ motori di ricerca con precisione geografica</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-gradient-to-r from-purple-500 to-pink-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">Analisi Competitor</h4>
+                <p className="text-gray-300 text-sm">Scopri i competitor che usano le tue parole chiave e confronta le performance</p>
+              </div>
+              <div className="text-center">
+                <div className="bg-gradient-to-r from-orange-500 to-red-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">Ricerca Keywords</h4>
+                <p className="text-gray-300 text-sm">Trova parole chiave efficaci da Google Ads, autocomplete e ricerche correlate</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
